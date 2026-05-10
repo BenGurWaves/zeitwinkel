@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Zeitwinkel — The Time Angle</title>
+<meta name="description" content="Zeitwinkel. Independent Swiss watch manufacture. Saint-Imier. 100 watches per year.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,300;0,7..72,400;0,7..72,500;1,7..72,400&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Loader -->
+<div id="loader">
+  <div class="loader-heart">
+    <div class="loader-dot"></div>
+    <div class="loader-ring"></div>
+  </div>
+  <div class="loader-label">
+    <span class="loader-line">Measuring the angle</span>
+    <span class="loader-sub">Saint-Imier, Bernese Jura</span>
+  </div>
+</div>
+
+<!-- Custom cursor -->
+<div id="cursor" aria-hidden="true">
+  <div class="cursor-crosshair"></div>
+  <div class="cursor-dot"></div>
+</div>
+
+<!-- Background texture layer -->
+<div id="texture" aria-hidden="true">
+  <div class="grain"></div>
+  <div class="sheen" id="sheen"></div>
+</div>
+
+<!-- Main stage -->
+<div id="stage">
+  <!-- SVG rays and sector -->
+  <svg id="rays" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur stdDeviation="0.3" result="blur"/>
+        <feMerge>
+          <feMergeNode in="blur"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+    </defs>
+    <!-- Sector fill -->
+    <path id="sector" d="" fill="rgba(184,176,168,0.06)" stroke="none"/>
+    <!-- Fixed ray (horizon) -->
+    <line id="ray-fixed" x1="50" y1="50" x2="100" y2="50" stroke="#B8B0A8" stroke-width="0.08" opacity="0.35"/>
+    <!-- Rotating ray (index) -->
+    <line id="ray-rotate" x1="50" y1="50" x2="100" y2="50" stroke="#D4CFC8" stroke-width="0.12" filter="url(#glow)"/>
+    <!-- Vertex -->
+    <circle id="vertex" cx="50" cy="50" r="0.4" fill="#D4CFC8" filter="url(#glow)"/>
+    <!-- Angle arc -->
+    <path id="angle-arc" d="" fill="none" stroke="#B8B0A8" stroke-width="0.06" opacity="0.25"/>
+  </svg>
+
+  <!-- Angle number -->
+  <div id="angle-display">
+    <span id="angle-num">0</span><span class="angle-deg">°</span>
+  </div>
+
+  <!-- Content layers (one per angle) -->
+  <div class="content-layer" data-angle="0">
+    <div class="content-inner">
+      <p class="content-meta">Founded 2006</p>
+      <h2 class="content-title">The Founders</h2>
+      <p class="content-body">Three friends, still as passionate about time as they were on the first day. Still independent. Still in Saint-Imier.</p>
+    </div>
+  </div>
+
+  <div class="content-layer" data-angle="15">
+    <div class="content-inner">
+      <p class="content-meta">Saint-Imier, Bernese Jura</p>
+      <h2 class="content-title">The Workshop</h2>
+      <p class="content-body">No more than one hundred watches per year. Each assembled, regulated and tested by hand. The same watchmaker from the first component to the first heartbeat.</p>
+    </div>
+  </div>
+
+  <div class="content-layer" data-angle="30">
+    <div class="content-inner">
+      <p class="content-meta">Untreated nickel silver</p>
+      <h2 class="content-title">German Silver</h2>
+      <p class="content-body">Harder than brass. Warmer than steel. Requires the highest precision in processing and decoration. The plates and bridges of every Zeitwinkel movement.</p>
+    </div>
+  </div>
+
+  <div class="content-layer" data-angle="45">
+    <div class="content-inner">
+      <p class="content-meta">Caliber ZW0102 & ZW0103</p>
+      <h2 class="content-title">The Movement</h2>
+      <p class="content-body">Seventy-two hours of power reserve. Twenty-eight jewels. Two hundred and fifty-seven components. A robust three-quarter plate. Manufactured in the Swiss Jura.</p>
+    </div>
+  </div>
+
+  <div class="content-layer" data-angle="60">
+    <div class="content-inner">
+      <p class="content-meta">Five models, two sizes</p>
+      <h2 class="content-title">The Timepiece</h2>
+      <p class="content-body">173° Saphir. 273° Saphir Fumé. 273° Saphir Bleu. 240°. 082° Email Grand Feu. 188° MAKS. Modern interpretations of timeless classic design.</p>
+    </div>
+  </div>
+
+  <!-- Corner marks -->
+  <div class="mark" id="mark-tl">Zeitwinkel</div>
+  <div class="mark" id="mark-tr">Saint-Imier</div>
+  <div class="mark" id="mark-bl">Independent Swiss Manufacture</div>
+  <div class="mark" id="mark-br">100 per year</div>
+
+  <!-- Drag hint -->
+  <div id="hint">Drag to rotate the angle</div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
