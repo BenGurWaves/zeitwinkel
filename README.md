@@ -1,10 +1,10 @@
-# Zeitwinkel — The Time Angle
+# Zeitwinkel — The Five Positions
 
 Independent Swiss watch manufacture. Saint-Imier. 100 watches per year.
 
 ## Concept
 
-The brand name *Zeitwinkel* means "time angle" — a navigational measurement for calculating true local time. The site is the angle itself: two rays meeting at a vertex. The user rotates the index ray to explore five positions of the brand, from the founders to the timepiece.
+Five full-viewport rooms arranged horizontally. The user drags, swipes, or uses arrow keys to move between them. Each room reveals a different facet of the brand: the name, the workshop, German silver, the collection, and the philosophy. A reference to the five positions in which Zeitwinkel regulates each movement.
 
 ## Stack
 
