@@ -1,18 +1,18 @@
 # Zeitwinkel — PROJECT_NOTES
 
-## Concept — *The Five Positions*
+## Concept — *The Observatory*
 
 **The brand:** Zeitwinkel — independent Swiss watch manufacturer, founded 2006 by three friends in Saint-Imier, Bernese Jura. In-house manufacture calibers ZW0102 and ZW0103. Only 100 watches per year. German silver (untreated nickel silver) plates and bridges.
 
-**The truth:** Zeitwinkel regulates each movement in five positions — a meticulous process that ensures precision regardless of orientation. The name *Zeitwinkel* means "time angle."
+**The truth:** The brand's workshop sits in Saint-Imier, deep in the Bernese Jura — a region with dark mountain skies. The observatory metaphor: exploring the night sky to find truth, precision, and beauty.
 
-**Radical metaphor:** The website is a sequence of five rooms — like the five positions of regulation. The user moves horizontally through them, each room a different facet of the brand. The movement between rooms is the experience.
+**Radical metaphor:** The website IS the night sky. Text fragments are scattered across a dark canvas like stars in a constellation. The user's cursor is a soft telescope light — as they drift across the darkness, words glow into readability. The six watch models are the brightest stars. Clicking a star "pins" it and reveals its full story in a floating panel. Two faint constellation lines connect the narrative: one loop for the watches, one for the brand story. Eighty tiny stardust dots twinkle in the background.
 
-**Spatial grammar — The Five Positions:** Five full-viewport rooms arranged horizontally (500vw total). The user drags, swipes, or uses arrow keys to navigate between rooms. Each room has a distinct atmosphere — subtle background gradients, unique SVG accent shapes, and content that fades in when the room becomes active. A thin progress line at the bottom shows position. Corner marks provide constant brand context.
+**Spatial grammar — The Observatory:** No scroll. No nav. No rooms. The viewport is a single dark field. Stars are positioned absolutely using percentage coordinates. Each star has a type (core, watch, story, dim) determining its size, default opacity, and glow effect. A 140px radius around the cursor illuminates nearby stars. Stars outside the radius fade to their base opacity. Pinned stars stay illuminated until unpinned.
 
-**Cursor:** A luminous dot with a thin ring — like the sight of a precision instrument. The ring expands on hover.
+**Cursor / Telescope:** A luminous dot at the center with a thin ring and a soft radial glow (180px). When near a star, the ring expands. On mobile, the cursor is hidden — touch and drag to explore, tap to pin.
 
-**Loader:** A single point of light pulsing like a heartbeat, with a thin ring. Text: "Regulating" / "Saint-Imier, Bernese Jura".
+**Loader:** A single point of light pulsing like a heartbeat, with a thin ring. Text: "Aligning the stars" / "Saint-Imier, Bernese Jura".
 
 **Living texture:** Very dark charcoal (#0C0C0C) with SVG fractalNoise grain at 0.035 opacity.
 
@@ -20,35 +20,58 @@
 
 **Palette — Saint-Imier Night (new):** Background `#0C0C0C` · German Silver `#B8B0A8` · Luminous Ray `#D4CFC8` · Text `#E8E4DC` · Muted `#8A8580`.
 
-**Anti-pattern audit:** No nav · no hero · no centred headline · no scroll-snap · no cards · no hamburger · no footer · no video · no stock asset · no library default. Differs from Anton (radial clock), Poole (folio), Gibran (held tableau/film/listening room), Garrick (bench-top), Agentur Grimm (cork wall).
+**Anti-pattern audit:** No nav · no hero · no centred headline · no scroll-snap · no cards · no hamburger · no footer · no video · no stock asset · no library default. Differs from Anton (radial clock), Poole (folio), Gibran (held tableau/film/listening room), Garrick (bench-top), Agentur Grimm (cork wall), Zeitwinkel v1 (time angle), Zeitwinkel v2 (five positions).
 
-## Five Rooms
+## The Stars
 
-- **01 — Zeitwinkel:** The brand name large and italic. "The time angle" subtitle. Founded 2006. Three friends, still independent, still in Saint-Imier.
-- **02 — The Workshop:** Saint-Imier, Bernese Jura. No more than 100 watches per year. Each assembled, regulated and tested by hand. Stats: 100 watches/year, 1 watchmaker per watch.
-- **03 — German Silver:** Untreated nickel silver. Harder than brass. Warmer than steel. In-house calibers ZW0102 and ZW0103. Stats: 72h power reserve, 28 jewels, 257 components.
-- **04 — The Collection:** All six watch models listed with sizes. 173° Saphir, 273° Saphir Fumé, 273° Saphir Bleu, 240°, 082° Email Grand Feu, 188° MAKS. Two sizes: 42.5mm and 39mm.
-- **05 — True Local Time:** Philosophy. No shortcuts. No simplifications. Contact: Saint-Imier, Bernese Jura, Switzerland.
+**Core:** Zeitwinkel (center, large italic, 0.5 opacity)
+
+**Watch stars (medium brightness):**
+- 173° Saphir — 39.7 mm
+- 273° Saphir — 42.5 mm (Fumé and Bleu)
+- 240° — 40.5 mm
+- 082° Email Grand Feu — 39 mm
+- 188° MAKS — 39 mm
+
+**Story stars (dim):**
+- Saint-Imier
+- German Silver
+- The Movement
+- True Local Time
+- 100
+- Three Friends
+
+**Dim stars (very faint):**
+- 72h (power reserve)
+- 28 (jewels)
+- 257 (components)
+
+## Constellation Lines
+
+- **Watch loop:** Zeitwinkel → 173° → 273° → 240° → 082° → 188° → Zeitwinkel
+- **Story loop:** Zeitwinkel → Three Friends → 100 → German Silver → The Movement → True Local Time → Zeitwinkel
 
 ## Radical References
 
-1. **Olafur Eliasson — "The Weather Project" (Tate Modern, 2003)** — a single artificial sun in a dark space, the viewer's position changes the angle of light.
-2. **James Turrell — Skyspaces** — a thin aperture framing the sky, the viewer's position determines what is seen.
-3. **Robert Irwin — "Untitled" (1969)** — the space between viewer and object becomes the artwork.
-4. **Carsten Nicolai — "unidisplay"** — data visualized through geometric precision and ratios.
-5. **Rafael Lozano-Hemmer — "Pulse Room"** — heartbeat translated to light, pulsing through a field.
+1. **Olafur Eliasson — "The Weather Project" (Tate Modern, 2003)** — a single artificial sun in a dark space, the viewer's position changes what is seen.
+2. **James Turrell — Roden Crater** — an extinct volcano transformed into a naked-eye observatory. Light and darkness as the medium.
+3. **Robert Irwin — "Untitled" (1969)** — the space between viewer and object becomes the artwork. Perception as medium.
+4. **Carsten Nicolai — "unidisplay"** — data visualized through geometric precision and ratios in darkness.
+5. **Rafael Lozano-Hemmer — "Pulse Room"** — heartbeat translated to light, pulsing through a field of bulbs.
 
 ## Technical
 
 - Static HTML / CSS / vanilla JS — no build step.
 - Google Fonts: Sora + Literata.
-- Five `section.room` elements inside a flex container.
-- Pointer events for drag + touch navigation.
-- Wheel and keyboard arrow navigation.
-- Progress line with active markers.
-- Room indicator (01/05) in top right.
-- Content fades in via CSS transitions on `.active` class.
-- Mobile: swipe navigation, no custom cursor, hidden accent SVGs.
+- ~15 `.star` elements positioned absolutely with percentage-based coordinates.
+- 80 `.stardust-dot` elements generated by JS with random positions and twinkle animations.
+- SVG `<path>` elements for constellation lines, drawn by calculating star positions relative to viewport.
+- Pointer events for cursor tracking and star illumination.
+- Distance calculation: `sqrt((cx - x)^2 + (cy - y)^2) < LIGHT_RADIUS`.
+- Click to toggle pin state — pinned stars stay illuminated and show detail panel.
+- Detail panel positioned near star, constrained to viewport bounds.
+- Keyboard: Escape closes all pinned stars.
+- Mobile: custom cursor hidden, touch to explore, tap to pin.
 
 ## Deployment
 
