@@ -1,190 +1,54 @@
-// ─── Zeitwinkel — Das Werk ───
-// Caliber ZW0102, schematic. Click any station to explore.
+// ─── Zeitwinkel — Surface ───
+// The cursor is a point light. The surface responds.
 
-const stage = document.getElementById('stage');
-const movement = document.getElementById('movement');
-const camera = document.getElementById('camera');
+const surface = document.getElementById('surface');
+const light = document.getElementById('light');
+const lightDiffuse = document.getElementById('light-diffuse');
+const lightEngrave = document.getElementById('light-engrave');
 const loader = document.getElementById('loader');
 const cursor = document.getElementById('cursor');
-const cursorLabel = document.getElementById('cursor-label');
-const panel = document.getElementById('panel');
-const panelClose = document.getElementById('panel-close');
-const panelContent = document.getElementById('panel-content');
-const titleOverlay = document.getElementById('title-overlay');
 const marks = document.querySelectorAll('.mark');
-const hint = document.getElementById('hint');
-const stations = document.querySelectorAll('.station');
+const progress = document.getElementById('progress-fill');
+const sectionNum = document.getElementById('section-num');
+const engravings = document.querySelectorAll('.engraving');
 
-const STATION_LABELS = {
-  barrel: 'Mainspring · Power',
-  center: 'The Workshop',
-  escape: 'Escapement',
-  balance: 'First Heartbeat',
-  plate: 'German Silver'
-};
-
-let activeStation = null;
+const TOTAL = engravings.length;
+let current = 0;
+let transitioning = false;
+let lightX = 960;
+let lightY = 540;
+let targetX = 960;
+let targetY = 540;
 let cursorActive = false;
+let loaded = false;
 
-// ─── Procedural SVG generation ───────────────────────────────
+// ─── Light follows cursor with lerp ───────────────────────
 
-const SVG_NS = 'http://www.w3.org/2000/svg';
+function lerp(a, b, t) { return a + (b - a) * t; }
 
-// Build ratchet teeth around the barrel
-function buildRatchetTeeth() {
-  const g = document.getElementById('ratchet-teeth');
-  const cx = -160, cy = -200, r = 105, count = 60;
-  let path = '';
-  for (let i = 0; i < count; i++) {
-    const a = (i / count) * Math.PI * 2;
-    const x1 = cx + Math.cos(a) * r;
-    const y1 = cy + Math.sin(a) * r;
-    const x2 = cx + Math.cos(a + 0.05) * (r + 4);
-    const y2 = cy + Math.sin(a + 0.05) * (r + 4);
-    const x3 = cx + Math.cos(a + 0.1) * r;
-    const y3 = cy + Math.sin(a + 0.1) * r;
-    path += `M ${x1} ${y1} L ${x2} ${y2} L ${x3} ${y3} `;
-  }
-  const p = document.createElementNS(SVG_NS, 'path');
-  p.setAttribute('d', path);
-  p.setAttribute('fill', 'none');
-  p.setAttribute('stroke', '#B8B0A8');
-  p.setAttribute('stroke-width', '0.4');
-  p.setAttribute('opacity', '0.4');
-  g.appendChild(p);
+function animateLight() {
+  lightX = lerp(lightX, targetX, 0.04);
+  lightY = lerp(lightY, targetY, 0.04);
+
+  // Map viewport coords to SVG viewBox (1920x1080)
+  const svgX = (lightX / window.innerWidth) * 1920;
+  const svgY = (lightY / window.innerHeight) * 1080;
+
+  light.setAttribute('x', svgX);
+  light.setAttribute('y', svgY);
+  lightDiffuse.setAttribute('x', svgX);
+  lightDiffuse.setAttribute('y', svgY);
+  lightEngrave.setAttribute('x', svgX);
+  lightEngrave.setAttribute('y', svgY);
+
+  requestAnimationFrame(animateLight);
 }
-
-// Mainspring spiral
-function buildMainspring() {
-  const cx = -160, cy = -200;
-  let path = `M ${cx + 14} ${cy}`;
-  const turns = 6;
-  const steps = 220;
-  for (let i = 0; i <= steps; i++) {
-    const t = i / steps;
-    const angle = t * turns * Math.PI * 2;
-    const radius = 14 + t * 70;
-    const x = cx + Math.cos(angle) * radius;
-    const y = cy + Math.sin(angle) * radius;
-    path += ` L ${x.toFixed(2)} ${y.toFixed(2)}`;
-  }
-  document.getElementById('mainspring').setAttribute('d', path);
-}
-
-// Center wheel spokes + teeth
-function buildCenterWheel() {
-  const spokes = document.getElementById('center-spokes');
-  const teeth = document.getElementById('center-teeth');
-  const cx = 0, cy = -40, r = 58;
-  // 6 spokes
-  for (let i = 0; i < 6; i++) {
-    const a = (i / 6) * Math.PI * 2;
-    const x1 = cx, y1 = cy;
-    const x2 = cx + Math.cos(a) * r;
-    const y2 = cy + Math.sin(a) * r;
-    const ln = document.createElementNS(SVG_NS, 'line');
-    ln.setAttribute('x1', x1); ln.setAttribute('y1', y1);
-    ln.setAttribute('x2', x2); ln.setAttribute('y2', y2);
-    ln.setAttribute('stroke', '#B8B0A8');
-    ln.setAttribute('stroke-width', '1.5');
-    ln.setAttribute('opacity', '0.6');
-    spokes.appendChild(ln);
-  }
-  // teeth
-  const count = 64;
-  let path = '';
-  for (let i = 0; i < count; i++) {
-    const a = (i / count) * Math.PI * 2;
-    const x1 = cx + Math.cos(a) * r;
-    const y1 = cy + Math.sin(a) * r;
-    const x2 = cx + Math.cos(a + 0.04) * (r + 3);
-    const y2 = cy + Math.sin(a + 0.04) * (r + 3);
-    const x3 = cx + Math.cos(a + 0.08) * r;
-    const y3 = cy + Math.sin(a + 0.08) * r;
-    path += `M ${x1.toFixed(2)} ${y1.toFixed(2)} L ${x2.toFixed(2)} ${y2.toFixed(2)} L ${x3.toFixed(2)} ${y3.toFixed(2)} `;
-  }
-  const p = document.createElementNS(SVG_NS, 'path');
-  p.setAttribute('d', path);
-  p.setAttribute('fill', 'none');
-  p.setAttribute('stroke', '#B8B0A8');
-  p.setAttribute('stroke-width', '0.4');
-  p.setAttribute('opacity', '0.4');
-  teeth.appendChild(p);
-}
-
-// Generic spoke wheel
-function buildSpokes(targetId, cx, cy, r, n) {
-  const g = document.getElementById(targetId);
-  for (let i = 0; i < n; i++) {
-    const a = (i / n) * Math.PI * 2;
-    const x2 = cx + Math.cos(a) * r;
-    const y2 = cy + Math.sin(a) * r;
-    const ln = document.createElementNS(SVG_NS, 'line');
-    ln.setAttribute('x1', cx); ln.setAttribute('y1', cy);
-    ln.setAttribute('x2', x2); ln.setAttribute('y2', y2);
-    ln.setAttribute('stroke', '#B8B0A8');
-    ln.setAttribute('stroke-width', '1.2');
-    ln.setAttribute('opacity', '0.55');
-    g.appendChild(ln);
-  }
-}
-
-// Escape wheel teeth (pointed, 30 teeth)
-function buildEscapeTeeth() {
-  const g = document.getElementById('escape-teeth');
-  const cx = 160, cy = 280, r = 33;
-  const count = 30;
-  let path = '';
-  for (let i = 0; i < count; i++) {
-    const a = (i / count) * Math.PI * 2;
-    const a2 = ((i + 0.4) / count) * Math.PI * 2;
-    const a3 = ((i + 0.8) / count) * Math.PI * 2;
-    const x1 = cx + Math.cos(a) * r;
-    const y1 = cy + Math.sin(a) * r;
-    const x2 = cx + Math.cos(a2) * (r + 5);
-    const y2 = cy + Math.sin(a2) * (r + 5);
-    const x3 = cx + Math.cos(a3) * r;
-    const y3 = cy + Math.sin(a3) * r;
-    path += `M ${x1.toFixed(2)} ${y1.toFixed(2)} L ${x2.toFixed(2)} ${y2.toFixed(2)} L ${x3.toFixed(2)} ${y3.toFixed(2)} `;
-  }
-  const p = document.createElementNS(SVG_NS, 'path');
-  p.setAttribute('d', path);
-  p.setAttribute('fill', 'none');
-  p.setAttribute('stroke', '#B8B0A8');
-  p.setAttribute('stroke-width', '0.5');
-  p.setAttribute('opacity', '0.6');
-  g.appendChild(p);
-}
-
-// Hairspring spiral around balance
-function buildHairspring() {
-  const cx = -220, cy = 200;
-  let path = `M ${cx + 14} ${cy}`;
-  const turns = 7;
-  const steps = 260;
-  for (let i = 0; i <= steps; i++) {
-    const t = i / steps;
-    const angle = t * turns * Math.PI * 2;
-    const radius = 14 + t * 78;
-    const x = cx + Math.cos(angle) * radius;
-    const y = cy + Math.sin(angle) * radius;
-    path += ` L ${x.toFixed(2)} ${y.toFixed(2)}`;
-  }
-  document.getElementById('hairspring').setAttribute('d', path);
-}
-
-buildRatchetTeeth();
-buildMainspring();
-buildCenterWheel();
-buildSpokes('third-spokes', 140, 60, 42, 5);
-buildSpokes('fourth-spokes', 240, 180, 36, 4);
-buildEscapeTeeth();
-buildHairspring();
-
-// ─── Cursor ──────────────────────────────────────────────────
 
 document.addEventListener('pointermove', (e) => {
-  if (!cursorActive) {
+  targetX = e.clientX;
+  targetY = e.clientY;
+
+  if (!cursorActive && loaded) {
     cursorActive = true;
     cursor.classList.add('active');
   }
@@ -192,112 +56,100 @@ document.addEventListener('pointermove', (e) => {
   cursor.style.top = e.clientY + 'px';
 });
 
-stations.forEach(st => {
-  st.addEventListener('mouseenter', () => {
-    cursor.classList.add('hover');
-    const id = st.dataset.id;
-    cursorLabel.textContent = STATION_LABELS[id] || '';
-  });
-  st.addEventListener('mouseleave', () => {
-    cursor.classList.remove('hover');
-  });
-});
-
-panelClose.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-panelClose.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-
-// ─── Zoom / station selection ────────────────────────────────
-
-function selectStation(id) {
-  const station = document.querySelector(`.station[data-id="${id}"]`);
-  if (!station) return;
-
-  activeStation = id;
-
-  // Mark active states
-  stations.forEach(s => s.classList.toggle('is-active', s.dataset.id === id));
-  stage.classList.add('has-zoom');
-
-  // Compute camera transform: translate so station center moves to a chosen anchor point
-  const cx = parseFloat(station.dataset.cx);
-  const cy = parseFloat(station.dataset.cy);
-  const scale = 2.0;
-
-  // We want the station point (cx,cy) in viewBox coords to appear roughly at viewBox(-220, 0)
-  // (left of center, leaving the right side for the panel).
-  const targetVbX = -220;
-  const targetVbY = 0;
-
-  // After scaling around (0,0): new position = (cx*scale, cy*scale)
-  // We need translation such that scaled point = targetVbX, targetVbY
-  // So translate by (targetVbX - cx*scale, targetVbY - cy*scale)
-  const tx = targetVbX - cx * scale;
-  const ty = targetVbY - cy * scale;
-
-  camera.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
-
-  // Hide title overlay
-  titleOverlay.classList.remove('visible');
-  hint.classList.add('hide');
-
-  // Render content into panel
-  const tpl = document.getElementById(`content-${id}`);
-  if (tpl) {
-    panelContent.innerHTML = '';
-    panelContent.appendChild(tpl.content.cloneNode(true));
-  }
-
-  // Open panel after a brief delay so zoom animation begins first
-  setTimeout(() => panel.classList.add('open'), 250);
+// Mobile: auto-orbit light
+let mobileAngle = 0;
+function mobileOrbit() {
+  if (window.innerWidth > 768) return;
+  mobileAngle += 0.004;
+  const cx = window.innerWidth / 2;
+  const cy = window.innerHeight / 2;
+  const rx = window.innerWidth * 0.35;
+  const ry = window.innerHeight * 0.25;
+  targetX = cx + Math.cos(mobileAngle) * rx;
+  targetY = cy + Math.sin(mobileAngle * 0.7) * ry;
+  requestAnimationFrame(mobileOrbit);
 }
 
-function deselectStation() {
-  activeStation = null;
-  stations.forEach(s => s.classList.remove('is-active'));
-  stage.classList.remove('has-zoom');
-  camera.style.transform = '';
-  panel.classList.remove('open');
-  setTimeout(() => titleOverlay.classList.add('visible'), 700);
+// ─── Section navigation (scroll / swipe / keys) ─────────
+
+function goTo(index) {
+  if (index < 0 || index >= TOTAL || index === current || transitioning) return;
+  transitioning = true;
+
+  const prev = engravings[current];
+  const next = engravings[index];
+
+  prev.classList.add('leaving');
+  prev.classList.remove('active');
+
+  setTimeout(() => {
+    prev.classList.remove('leaving');
+    next.classList.add('active');
+    current = index;
+    transitioning = false;
+
+    // Update progress
+    const pct = ((current + 1) / TOTAL) * 100;
+    progress.style.width = pct + '%';
+    sectionNum.textContent = String(current + 1).padStart(2, '0');
+  }, 700);
 }
 
-stations.forEach(st => {
-  st.addEventListener('click', (e) => {
-    e.stopPropagation();
-    const id = st.dataset.id;
-    if (activeStation === id) {
-      deselectStation();
-    } else {
-      selectStation(id);
-    }
-  });
-});
+// Wheel
+let wheelAccum = 0;
+let wheelTimer = null;
+document.addEventListener('wheel', (e) => {
+  e.preventDefault();
+  wheelAccum += e.deltaY;
+  clearTimeout(wheelTimer);
+  wheelTimer = setTimeout(() => {
+    if (wheelAccum > 30) goTo(current + 1);
+    else if (wheelAccum < -30) goTo(current - 1);
+    wheelAccum = 0;
+  }, 80);
+}, { passive: false });
 
-panelClose.addEventListener('click', deselectStation);
-
+// Keys
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && activeStation) {
-    deselectStation();
+  if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ') {
+    e.preventDefault();
+    goTo(current + 1);
+  }
+  if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+    e.preventDefault();
+    goTo(current - 1);
   }
 });
 
-// Click outside (on stage) closes
-stage.addEventListener('click', (e) => {
-  if (activeStation && !e.target.closest('.station') && !e.target.closest('#panel')) {
-    deselectStation();
-  }
-});
+// Touch swipe
+let touchStart = 0;
+document.addEventListener('touchstart', (e) => {
+  touchStart = e.touches[0].clientY;
+}, { passive: true });
+document.addEventListener('touchend', (e) => {
+  const dy = touchStart - e.changedTouches[0].clientY;
+  if (dy > 50) goTo(current + 1);
+  else if (dy < -50) goTo(current - 1);
+}, { passive: true });
 
-// ─── Loader ──────────────────────────────────────────────────
+// ─── Loader ──────────────────────────────────────────────
 
 function hideLoader() {
+  loaded = true;
   loader.classList.add('done');
+  surface.classList.add('visible');
   setTimeout(() => {
-    titleOverlay.classList.add('visible');
     marks.forEach(m => m.classList.add('visible'));
-    hint.classList.add('visible');
-  }, 400);
+  }, 800);
 }
 
 window.addEventListener('load', () => {
-  setTimeout(hideLoader, 2400);
+  setTimeout(hideLoader, 2800);
 });
+
+// ─── Start ───────────────────────────────────────────────
+
+animateLight();
+if (window.innerWidth <= 768) mobileOrbit();
+
+// A Velocity atelier work — © MMXXVI

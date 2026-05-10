@@ -3,370 +3,140 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>Zeitwinkel — Caliber ZW0102</title>
-<meta name="description" content="Zeitwinkel. Independent Swiss watch manufacture. Saint-Imier. Caliber ZW0102. Explore the movement.">
+<title>Zeitwinkel — Saint-Imier</title>
+<meta name="description" content="Zeitwinkel. Independent Swiss watch manufacture. Saint-Imier. In-house calibers. German silver. 100 per year.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,300;0,7..72,400;0,7..72,500;1,7..72,400&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,300;0,7..72,400;1,7..72,300;1,7..72,400&family=Sora:wght@200;300;400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- Loader -->
-<div id="loader">
-  <div class="loader-balance">
-    <svg viewBox="0 0 60 60" aria-hidden="true">
-      <g class="loader-bw">
-        <circle cx="30" cy="30" r="22" fill="none" stroke="#B8B0A8" stroke-width="0.6" opacity="0.5"/>
-        <circle cx="30" cy="30" r="18" fill="none" stroke="#B8B0A8" stroke-width="0.4" opacity="0.3"/>
-        <line x1="6" y1="30" x2="54" y2="30" stroke="#D4CFC8" stroke-width="0.8"/>
-        <line x1="30" y1="6" x2="30" y2="54" stroke="#D4CFC8" stroke-width="0.8"/>
-        <circle cx="30" cy="30" r="2.4" fill="#D4CFC8"/>
-      </g>
-    </svg>
-  </div>
-  <div class="loader-label">
-    <span class="loader-line">Caliber ZW0102</span>
-    <span class="loader-sub">28,800 vph · 72h · 28 jewels</span>
-  </div>
-</div>
+<!-- The Surface -->
+<svg id="surface" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <defs>
+    <!-- Base grain texture -->
+    <filter id="metal" x="0" y="0" width="100%" height="100%" color-interpolation-filters="linearRGB">
+      <!-- Côtes de Genève: directional turbulence -->
+      <feTurbulence type="fractalNoise" baseFrequency="0.002 0.4" numOctaves="3" seed="7" result="grain"/>
+      <!-- Displacement for physical texture -->
+      <feDisplacementMap in="SourceGraphic" in2="grain" scale="6" xChannelSelector="R" yChannelSelector="G" result="displaced"/>
+      <!-- Specular lighting from point light (cursor-driven) -->
+      <feSpecularLighting in="grain" surfaceScale="3.5" specularConstant="1.8" specularExponent="28" lighting-color="#E8E0D6" result="specular">
+        <fePointLight id="light" x="960" y="540" z="180"/>
+      </feSpecularLighting>
+      <!-- Combine: multiply specular onto surface -->
+      <feComposite in="specular" in2="SourceGraphic" operator="in" result="lit"/>
+      <!-- Diffuse layer for base visibility -->
+      <feDiffuseLighting in="grain" surfaceScale="2" diffuseConstant="0.35" lighting-color="#B8B0A8" result="diffuse">
+        <fePointLight id="light-diffuse" x="960" y="540" z="240"/>
+      </feDiffuseLighting>
+      <feComposite in="diffuse" in2="SourceGraphic" operator="in" result="lit-diffuse"/>
+      <!-- Blend specular and diffuse -->
+      <feBlend in="lit" in2="lit-diffuse" mode="screen" result="combined"/>
+      <!-- Fine noise overlay -->
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="33" result="fine"/>
+      <feComposite in="fine" in2="combined" operator="in" result="noise-masked"/>
+      <feBlend in="combined" in2="noise-masked" mode="multiply" result="final"/>
+    </filter>
 
-<!-- Custom cursor -->
-<div id="cursor" aria-hidden="true">
-  <div class="cursor-dot"></div>
-  <div class="cursor-ring"></div>
-  <div class="cursor-label" id="cursor-label"></div>
+    <!-- Engraving filter for text -->
+    <filter id="engrave" x="-5%" y="-20%" width="110%" height="140%">
+      <feMorphology operator="dilate" radius="0.3" in="SourceAlpha" result="dilated"/>
+      <feGaussianBlur in="dilated" stdDeviation="1.2" result="blur"/>
+      <feSpecularLighting in="blur" surfaceScale="5" specularConstant="1.2" specularExponent="20" lighting-color="#D4CFC8" result="spec">
+        <fePointLight id="light-engrave" x="960" y="540" z="160"/>
+      </feSpecularLighting>
+      <feComposite in="spec" in2="SourceAlpha" operator="in" result="engraved"/>
+      <!-- Shadow beneath engraving -->
+      <feOffset in="SourceAlpha" dx="0.5" dy="1" result="offset"/>
+      <feGaussianBlur in="offset" stdDeviation="0.5" result="shadow"/>
+      <feMerge>
+        <feMergeNode in="shadow"/>
+        <feMergeNode in="engraved"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Metal surface -->
+  <rect id="plate" x="0" y="0" width="1920" height="1080" fill="#1A1816" filter="url(#metal)"/>
+
+  <!-- Engravings container (content positioned by JS) -->
+  <g id="engravings" filter="url(#engrave)">
+  </g>
+</svg>
+
+<!-- Text layers (HTML for better typography, overlaid) -->
+<main id="content">
+  <section class="engraving active" data-index="0">
+    <h1 class="eng-title">Zeitwinkel</h1>
+    <p class="eng-sub">Saint-Imier · Bernese Jura · Switzerland</p>
+  </section>
+
+  <section class="engraving" data-index="1">
+    <p class="eng-meta">Independent Manufacture</p>
+    <h2 class="eng-title">One hundred<br>per year.</h2>
+    <p class="eng-body">Three friends. 2006. Still independent.<br>Each movement assembled, regulated, tested<br>by a single watchmaker's hands.</p>
+  </section>
+
+  <section class="engraving" data-index="2">
+    <p class="eng-meta">Material</p>
+    <h2 class="eng-title">German<br>silver.</h2>
+    <p class="eng-body">Untreated nickel silver. Harder than brass.<br>Warmer than steel. The plates and bridges<br>of every Zeitwinkel movement.</p>
+    <div class="eng-stats">
+      <span>72h power</span>
+      <span>28 jewels</span>
+      <span>257 parts</span>
+    </div>
+  </section>
+
+  <section class="engraving" data-index="3">
+    <p class="eng-meta">Collection</p>
+    <ul class="eng-list">
+      <li><span class="name">173° Saphir</span><span class="spec">39.7 mm</span></li>
+      <li><span class="name">273° Saphir Fumé</span><span class="spec">42.5 mm</span></li>
+      <li><span class="name">273° Saphir Bleu</span><span class="spec">42.5 mm</span></li>
+      <li><span class="name">240°</span><span class="spec">40.5 mm</span></li>
+      <li><span class="name">082° Email Grand Feu</span><span class="spec">39 mm</span></li>
+      <li><span class="name">188° MAKS</span><span class="spec">39 mm</span></li>
+    </ul>
+  </section>
+
+  <section class="engraving" data-index="4">
+    <p class="eng-meta">Philosophy</p>
+    <h2 class="eng-title eng-title--sm">No shortcuts.<br>No simplifications.</h2>
+    <p class="eng-body">Caliber ZW0102 · ZW0103<br>Five positions of regulation.<br>The first heartbeat begins here.</p>
+    <p class="eng-contact">zeitwinkel.ch</p>
+  </section>
+</main>
+
+<!-- Progress (thin line) -->
+<div id="progress">
+  <div id="progress-fill"></div>
 </div>
 
 <!-- Corner marks -->
-<header class="mark" id="mark-tl">
-  <span class="mark-line">Zeitwinkel</span>
-  <span class="mark-sub">Saint-Imier · CH</span>
-</header>
-<div class="mark" id="mark-tr">Caliber ZW0102</div>
-<div class="mark" id="mark-bl">Independent Swiss Manufacture</div>
-<div class="mark" id="mark-br">100 per year · Est. 2006</div>
+<div class="mark" id="mark-tl">Zeitwinkel</div>
+<div class="mark" id="mark-tr">ZW0102</div>
+<div class="mark" id="mark-bl">Saint-Imier</div>
+<div class="mark" id="mark-br"><span id="section-num">01</span> / 05</div>
 
-<!-- Hint -->
-<div id="hint">Click any component to explore</div>
-
-<!-- Stage -->
-<main id="stage">
-
-  <!-- Centerpiece title (visible at default zoom) -->
-  <div id="title-overlay" class="visible">
-    <p class="title-meta">Independent Swiss Manufacture</p>
-    <h1 class="title-main">Zeitwinkel</h1>
-    <p class="title-sub">The first heartbeat of a movement<br>begins in Saint-Imier.</p>
+<!-- Loader -->
+<div id="loader">
+  <div class="loader-inner">
+    <div class="loader-light"></div>
+    <p class="loader-text">Examining the surface</p>
   </div>
+</div>
 
-  <!-- The Movement -->
-  <svg id="movement" viewBox="-500 -500 1000 1000" preserveAspectRatio="xMidYMid meet" aria-label="Caliber ZW0102 schematic">
-    <defs>
-      <radialGradient id="jewel-grad" cx="50%" cy="40%" r="60%">
-        <stop offset="0%" stop-color="#FF8A6E" stop-opacity="1"/>
-        <stop offset="60%" stop-color="#C4321B" stop-opacity="1"/>
-        <stop offset="100%" stop-color="#7A1A0A" stop-opacity="1"/>
-      </radialGradient>
-      <radialGradient id="silver-grad" cx="40%" cy="35%" r="80%">
-        <stop offset="0%" stop-color="#A8A098" stop-opacity="0.18"/>
-        <stop offset="60%" stop-color="#8A8278" stop-opacity="0.10"/>
-        <stop offset="100%" stop-color="#5A5248" stop-opacity="0.06"/>
-      </radialGradient>
-      <radialGradient id="silver-grad-bright" cx="40%" cy="35%" r="80%">
-        <stop offset="0%" stop-color="#C8C0B8" stop-opacity="0.28"/>
-        <stop offset="60%" stop-color="#A8A098" stop-opacity="0.18"/>
-        <stop offset="100%" stop-color="#7A7268" stop-opacity="0.10"/>
-      </radialGradient>
-      <filter id="soft-glow" x="-50%" y="-50%" width="200%" height="200%">
-        <feGaussianBlur stdDeviation="2" result="blur"/>
-        <feMerge>
-          <feMergeNode in="blur"/>
-          <feMergeNode in="SourceGraphic"/>
-        </feMerge>
-      </filter>
-      <filter id="ruby-glow" x="-100%" y="-100%" width="300%" height="300%">
-        <feGaussianBlur stdDeviation="3" result="blur"/>
-        <feMerge>
-          <feMergeNode in="blur"/>
-          <feMergeNode in="SourceGraphic"/>
-        </feMerge>
-      </filter>
-      <pattern id="cotes" patternUnits="userSpaceOnUse" width="22" height="22" patternTransform="rotate(45)">
-        <line x1="0" y1="0" x2="0" y2="22" stroke="#B8B0A8" stroke-width="0.4" opacity="0.08"/>
-      </pattern>
-    </defs>
-
-    <!-- Camera group (controlled by JS for zoom) -->
-    <g id="camera">
-
-      <!-- Outer case ring (very subtle, watch case echo) -->
-      <circle cx="0" cy="0" r="470" fill="none" stroke="#B8B0A8" stroke-width="0.6" opacity="0.08"/>
-      <circle cx="0" cy="0" r="450" fill="none" stroke="#B8B0A8" stroke-width="0.4" opacity="0.06"/>
-
-      <!-- Three-quarter plate (the German silver mass) -->
-      <g id="plate" class="part">
-        <!-- Main plate shape: roughly three-quarters covering, irregular curve -->
-        <path d="
-          M -380,-220
-          C -360,-360 -240,-410 -80,-410
-          C 120,-410 280,-340 360,-200
-          C 400,-100 400,40 360,160
-          C 320,260 220,330 100,360
-          C 60,370 20,380 -20,380
-          L -20,200
-          C -20,200 -100,180 -150,140
-          C -200,100 -240,40 -260,-40
-          C -280,-120 -340,-160 -380,-220 Z"
-          fill="url(#silver-grad)"
-          stroke="#B8B0A8"
-          stroke-width="0.8"
-          opacity="0.85"/>
-        <!-- Côtes de Genève texture overlay -->
-        <path d="
-          M -380,-220
-          C -360,-360 -240,-410 -80,-410
-          C 120,-410 280,-340 360,-200
-          C 400,-100 400,40 360,160
-          C 320,260 220,330 100,360
-          C 60,370 20,380 -20,380
-          L -20,200
-          C -20,200 -100,180 -150,140
-          C -200,100 -240,40 -260,-40
-          C -280,-120 -340,-160 -380,-220 Z"
-          fill="url(#cotes)"/>
-        <!-- Plate engraving -->
-        <text x="-200" y="-280" class="engrave-large" text-anchor="middle">ZEITWINKEL</text>
-        <text x="-200" y="-258" class="engrave-small" text-anchor="middle">SWISS MADE · ZW0102</text>
-        <text x="-200" y="-244" class="engrave-small" text-anchor="middle">SAINT-IMIER · 28 J</text>
-      </g>
-
-      <!-- Bridge: barrel bridge -->
-      <g id="bridge-barrel" opacity="0.9">
-        <path d="M -280,-280 C -200,-340 -40,-340 60,-260 C 100,-220 80,-160 20,-140 C -80,-110 -200,-150 -260,-200 C -290,-230 -300,-260 -280,-280 Z"
-              fill="url(#silver-grad-bright)" stroke="#B8B0A8" stroke-width="0.7"/>
-      </g>
-
-      <!-- Bridge: balance bridge -->
-      <g id="bridge-balance" opacity="0.9">
-        <path d="M -360,80 C -320,40 -240,40 -180,80 C -140,120 -140,180 -180,220 C -240,260 -320,260 -360,220 C -380,180 -380,120 -360,80 Z"
-              fill="url(#silver-grad-bright)" stroke="#B8B0A8" stroke-width="0.7"/>
-      </g>
-
-      <!-- Bridge: train bridge -->
-      <g id="bridge-train" opacity="0.85">
-        <path d="M 80,-80 C 180,-120 280,-80 320,40 C 340,140 280,220 180,240 C 100,250 40,200 40,120 C 40,40 40,-40 80,-80 Z"
-              fill="url(#silver-grad)" stroke="#B8B0A8" stroke-width="0.6"/>
-      </g>
-
-      <!-- ─── BARREL (mainspring) ─── -->
-      <g class="station" data-id="barrel" data-cx="-160" data-cy="-200">
-        <!-- ratchet wheel teeth -->
-        <g class="rotate-slow">
-          <circle cx="-160" cy="-200" r="105" fill="none" stroke="#B8B0A8" stroke-width="0.5" opacity="0.4"/>
-          <g id="ratchet-teeth"></g>
-        </g>
-        <!-- main barrel body -->
-        <circle cx="-160" cy="-200" r="95" fill="#0F0F0F" stroke="#B8B0A8" stroke-width="0.8" opacity="0.95"/>
-        <circle cx="-160" cy="-200" r="92" fill="none" stroke="#B8B0A8" stroke-width="0.3" opacity="0.5"/>
-        <!-- mainspring spiral -->
-        <g class="rotate-slow-rev">
-          <path id="mainspring" d="" fill="none" stroke="#D4CFC8" stroke-width="0.8" opacity="0.55"/>
-        </g>
-        <!-- arbor -->
-        <circle cx="-160" cy="-200" r="14" fill="#1A1A1A" stroke="#B8B0A8" stroke-width="0.6"/>
-        <circle cx="-160" cy="-200" r="6" fill="url(#jewel-grad)" filter="url(#ruby-glow)"/>
-        <!-- click pawl -->
-        <path d="M -55,-220 L -75,-200 L -55,-180 Z" fill="#B8B0A8" opacity="0.5"/>
-        <!-- screws -->
-        <circle cx="-260" cy="-260" r="7" fill="#0F0F0F" stroke="#B8B0A8" stroke-width="0.5"/>
-        <line x1="-266" y1="-260" x2="-254" y2="-260" stroke="#B8B0A8" stroke-width="0.4"/>
-        <circle cx="-60" cy="-260" r="7" fill="#0F0F0F" stroke="#B8B0A8" stroke-width="0.5"/>
-        <line x1="-66" y1="-260" x2="-54" y2="-260" stroke="#B8B0A8" stroke-width="0.4"/>
-        <!-- label (visible on hover via JS) -->
-        <text x="-160" y="-340" class="station-label" text-anchor="middle">BARREL · 72H POWER RESERVE</text>
-      </g>
-
-      <!-- ─── CENTER WHEEL ─── -->
-      <g class="station" data-id="center" data-cx="0" data-cy="-40">
-        <g class="rotate-center">
-          <circle cx="0" cy="-40" r="62" fill="#0F0F0F" stroke="#B8B0A8" stroke-width="0.5" opacity="0.9"/>
-          <circle cx="0" cy="-40" r="58" fill="none" stroke="#B8B0A8" stroke-width="0.3" opacity="0.4"/>
-          <g id="center-spokes"></g>
-          <g id="center-teeth"></g>
-        </g>
-        <circle cx="0" cy="-40" r="9" fill="#1A1A1A" stroke="#B8B0A8" stroke-width="0.5"/>
-        <circle cx="0" cy="-40" r="3.5" fill="url(#jewel-grad)" filter="url(#ruby-glow)"/>
-        <text x="0" y="50" class="station-label" text-anchor="middle">CENTER WHEEL · MINUTES</text>
-      </g>
-
-      <!-- ─── THIRD WHEEL ─── -->
-      <g class="part-decor">
-        <g class="rotate-third">
-          <circle cx="140" cy="60" r="44" fill="#0F0F0F" stroke="#B8B0A8" stroke-width="0.4" opacity="0.85"/>
-          <g id="third-spokes"></g>
-        </g>
-        <circle cx="140" cy="60" r="6" fill="#1A1A1A" stroke="#B8B0A8" stroke-width="0.4"/>
-        <circle cx="140" cy="60" r="2.5" fill="url(#jewel-grad)" filter="url(#ruby-glow)"/>
-      </g>
-
-      <!-- ─── FOURTH WHEEL (small seconds) ─── -->
-      <g class="part-decor">
-        <g class="rotate-fourth">
-          <circle cx="240" cy="180" r="38" fill="#0F0F0F" stroke="#B8B0A8" stroke-width="0.4" opacity="0.85"/>
-          <g id="fourth-spokes"></g>
-        </g>
-        <circle cx="240" cy="180" r="5" fill="#1A1A1A" stroke="#B8B0A8" stroke-width="0.4"/>
-        <circle cx="240" cy="180" r="2" fill="url(#jewel-grad)" filter="url(#ruby-glow)"/>
-      </g>
-
-      <!-- ─── ESCAPE WHEEL ─── -->
-      <g class="station" data-id="escape" data-cx="160" data-cy="280">
-        <g id="escape-rotate">
-          <circle cx="160" cy="280" r="36" fill="none" stroke="#B8B0A8" stroke-width="0.5" opacity="0.8"/>
-          <g id="escape-teeth"></g>
-        </g>
-        <circle cx="160" cy="280" r="6" fill="#1A1A1A" stroke="#B8B0A8" stroke-width="0.4"/>
-        <circle cx="160" cy="280" r="2.5" fill="url(#jewel-grad)" filter="url(#ruby-glow)"/>
-        <!-- pallet fork -->
-        <g id="pallet">
-          <line x1="80" y1="290" x2="140" y2="278" stroke="#B8B0A8" stroke-width="2" opacity="0.7"/>
-          <circle cx="80" cy="292" r="5" fill="#0F0F0F" stroke="#B8B0A8" stroke-width="0.4"/>
-          <circle cx="80" cy="292" r="2" fill="url(#jewel-grad)" filter="url(#ruby-glow)"/>
-        </g>
-        <text x="160" y="350" class="station-label" text-anchor="middle">ESCAPEMENT · 28,800 VPH</text>
-      </g>
-
-      <!-- ─── BALANCE WHEEL ─── -->
-      <g class="station" data-id="balance" data-cx="-220" data-cy="200">
-        <!-- hairspring -->
-        <g class="oscillate-slow">
-          <path id="hairspring" d="" fill="none" stroke="#D4CFC8" stroke-width="0.6" opacity="0.45"/>
-        </g>
-        <!-- balance wheel oscillating -->
-        <g id="balance-rotate">
-          <!-- outer rim -->
-          <circle cx="-220" cy="200" r="115" fill="none" stroke="#B8B0A8" stroke-width="2.5" opacity="0.8"/>
-          <circle cx="-220" cy="200" r="111" fill="none" stroke="#B8B0A8" stroke-width="0.4" opacity="0.4"/>
-          <!-- spokes -->
-          <line x1="-335" y1="200" x2="-105" y2="200" stroke="#B8B0A8" stroke-width="2.5" opacity="0.8"/>
-          <line x1="-220" y1="85" x2="-220" y2="315" stroke="#B8B0A8" stroke-width="2.5" opacity="0.8"/>
-          <!-- mass screws on rim -->
-          <circle cx="-105" cy="200" r="6" fill="#1A1A1A" stroke="#B8B0A8" stroke-width="0.5"/>
-          <circle cx="-335" cy="200" r="6" fill="#1A1A1A" stroke="#B8B0A8" stroke-width="0.5"/>
-          <circle cx="-220" cy="85" r="6" fill="#1A1A1A" stroke="#B8B0A8" stroke-width="0.5"/>
-          <circle cx="-220" cy="315" r="6" fill="#1A1A1A" stroke="#B8B0A8" stroke-width="0.5"/>
-          <!-- diagonal mass screws -->
-          <circle cx="-138" cy="118" r="5" fill="#1A1A1A" stroke="#B8B0A8" stroke-width="0.4"/>
-          <circle cx="-302" cy="282" r="5" fill="#1A1A1A" stroke="#B8B0A8" stroke-width="0.4"/>
-          <circle cx="-138" cy="282" r="5" fill="#1A1A1A" stroke="#B8B0A8" stroke-width="0.4"/>
-          <circle cx="-302" cy="118" r="5" fill="#1A1A1A" stroke="#B8B0A8" stroke-width="0.4"/>
-        </g>
-        <!-- center pivot -->
-        <circle cx="-220" cy="200" r="11" fill="#0F0F0F" stroke="#B8B0A8" stroke-width="0.6"/>
-        <circle cx="-220" cy="200" r="5" fill="url(#jewel-grad)" filter="url(#ruby-glow)"/>
-        <text x="-220" y="-50" class="station-label" text-anchor="middle">BALANCE · THE FIRST HEARTBEAT</text>
-      </g>
-
-      <!-- ─── PLATE / BRAND CENTERPIECE STATION ─── -->
-      <g class="station" data-id="plate" data-cx="-200" data-cy="-280">
-        <rect x="-300" y="-310" width="200" height="40" fill="transparent"/>
-      </g>
-
-      <!-- Connecting jewels (additional) -->
-      <g class="part-decor">
-        <circle cx="-80" cy="100" r="3" fill="url(#jewel-grad)" filter="url(#ruby-glow)"/>
-        <circle cx="80" cy="200" r="3" fill="url(#jewel-grad)" filter="url(#ruby-glow)"/>
-        <circle cx="200" cy="-100" r="3" fill="url(#jewel-grad)" filter="url(#ruby-glow)"/>
-      </g>
-
-      <!-- regulator index (swan-neck) -->
-      <g class="part-decor">
-        <path d="M -60,140 C -40,130 -20,135 -10,150 C 0,165 -10,180 -30,175 C -50,170 -70,160 -60,140 Z"
-              fill="none" stroke="#B8B0A8" stroke-width="0.6" opacity="0.6"/>
-        <circle cx="-30" cy="155" r="2" fill="#D4CFC8" opacity="0.7"/>
-      </g>
-
-      <!-- Crown stem (right side of case) -->
-      <g class="part-decor" opacity="0.5">
-        <line x1="380" y1="-40" x2="450" y2="-40" stroke="#B8B0A8" stroke-width="2"/>
-        <circle cx="455" cy="-40" r="14" fill="none" stroke="#B8B0A8" stroke-width="1"/>
-        <circle cx="455" cy="-40" r="11" fill="none" stroke="#B8B0A8" stroke-width="0.4"/>
-      </g>
-
-    </g>
-  </svg>
-
-  <!-- Content panel (slides in when station is active) -->
-  <aside id="panel">
-    <button id="panel-close" aria-label="Return to movement">
-      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5">
-        <line x1="6" y1="6" x2="18" y2="18"/>
-        <line x1="18" y1="6" x2="6" y2="18"/>
-      </svg>
-      <span>Return</span>
-    </button>
-    <div class="panel-inner" id="panel-content"></div>
-  </aside>
-
-</main>
-
-<!-- Content data (rendered by JS into panel) -->
-<template id="content-barrel">
-  <p class="panel-meta">Mainspring Barrel</p>
-  <h2 class="panel-title">Seventy-two<br>hours.</h2>
-  <p class="panel-body">A single coiled mainspring, fully wound, drives the caliber for three full days. The barrel turns slowly, releasing energy through the wheel train at a measured pace.</p>
-  <div class="panel-stats">
-    <div class="pstat"><span class="pstat-num">72h</span><span class="pstat-label">Power reserve</span></div>
-    <div class="pstat"><span class="pstat-num">1</span><span class="pstat-label">Single barrel</span></div>
-  </div>
-</template>
-
-<template id="content-center">
-  <p class="panel-meta">The Workshop</p>
-  <h2 class="panel-title">One hundred<br>per year.</h2>
-  <p class="panel-body">Saint-Imier, Bernese Jura. The same watchmaker assembles, regulates and tests each movement from the first component to the first heartbeat. No more than one hundred timepieces leave the workshop each year.</p>
-  <div class="panel-stats">
-    <div class="pstat"><span class="pstat-num">100</span><span class="pstat-label">Per year</span></div>
-    <div class="pstat"><span class="pstat-num">1</span><span class="pstat-label">Watchmaker per watch</span></div>
-  </div>
-</template>
-
-<template id="content-escape">
-  <p class="panel-meta">Escapement</p>
-  <h2 class="panel-title">Twenty-eight<br>thousand eight hundred.</h2>
-  <p class="panel-body">Vibrations per hour. Eight ticks every second. The Swiss lever escapement releases the wheel train in tiny, equal increments — the rhythm by which the watch keeps time. Regulated in five positions.</p>
-  <div class="panel-stats">
-    <div class="pstat"><span class="pstat-num">4 Hz</span><span class="pstat-label">Frequency</span></div>
-    <div class="pstat"><span class="pstat-num">5</span><span class="pstat-label">Positions of regulation</span></div>
-    <div class="pstat"><span class="pstat-num">28</span><span class="pstat-label">Jewels</span></div>
-  </div>
-</template>
-
-<template id="content-balance">
-  <p class="panel-meta">Balance Wheel</p>
-  <h2 class="panel-title">The first<br><em>heartbeat.</em></h2>
-  <p class="panel-body">The oscillator. A weighted wheel turning back and forth on its hairspring, four times each second. When a Zeitwinkel watch leaves Saint-Imier, this is the first thing the watchmaker hears: the first beat of the new movement.</p>
-  <div class="panel-stats">
-    <div class="pstat"><span class="pstat-num">257</span><span class="pstat-label">Components</span></div>
-    <div class="pstat"><span class="pstat-num">28</span><span class="pstat-label">Jewels</span></div>
-  </div>
-</template>
-
-<template id="content-plate">
-  <p class="panel-meta">Three-Quarter Plate</p>
-  <h2 class="panel-title">German<br>silver.</h2>
-  <p class="panel-body">Untreated nickel silver. Harder than brass. Warmer than steel. The plates and bridges of every Zeitwinkel movement are machined and decorated by hand from this difficult, beautiful material. The collection — six watches in two sizes:</p>
-  <ul class="watch-list">
-    <li><span class="watch-name">173° Saphir</span><span class="watch-size">39.7 mm</span></li>
-    <li><span class="watch-name">273° Saphir Fumé</span><span class="watch-size">42.5 mm</span></li>
-    <li><span class="watch-name">273° Saphir Bleu</span><span class="watch-size">42.5 mm</span></li>
-    <li><span class="watch-name">240°</span><span class="watch-size">40.5 mm</span></li>
-    <li><span class="watch-name">082° Email Grand Feu</span><span class="watch-size">39 mm</span></li>
-    <li><span class="watch-name">188° MAKS</span><span class="watch-size">39 mm</span></li>
-  </ul>
-</template>
+<!-- Cursor (light source indicator) -->
+<div id="cursor" aria-hidden="true">
+  <div class="cursor-glow"></div>
+  <div class="cursor-point"></div>
+</div>
 
 <script src="script.js"></script>
+
+<!-- A Velocity atelier work — © MMXXVI -->
 </body>
 </html>

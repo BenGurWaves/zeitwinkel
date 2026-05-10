@@ -25,4 +25,6 @@ python3 -m http.server 8204
 npx wrangler pages deploy . --project-name=zeitwinkel
 ```
 
-A *Velocity* atelier work — © MMXXVI.
+---
+
+A Velocity atelier work — © MMXXVI.
