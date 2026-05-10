@@ -1,10 +1,10 @@
-# Zeitwinkel — The Observatory
+# Zeitwinkel — The Five Positions
 
 Independent Swiss watch manufacture. Saint-Imier. 100 watches per year.
 
 ## Concept
 
-A dark canvas scattered with luminous text fragments like stars in the Jura night sky. Your cursor is a soft telescope light — drift it across the darkness and words glow into readability. The six watch models are the brightest stars. Click any star to pin it and reveal its full story. Faint constellation lines connect the narrative: one loop for the watches, one for the brand story. Eighty twinkling stardust dots fill the background. No scroll. No rooms. No nav. Just exploration.
+Five full-viewport rooms arranged horizontally. The user drags, swipes, or uses arrow keys to move between them. Each room reveals a different facet of the brand: the name, the workshop, German silver, the collection, and the philosophy. A reference to the five positions in which Zeitwinkel regulates each movement.
 
 ## Stack
 
