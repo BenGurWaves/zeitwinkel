@@ -14,35 +14,11 @@
 
 <!-- Loader -->
 <div id="loader">
-  <div class="loader-dot"></div>
-  <div class="loader-ring"></div>
+  <div class="loader-pulse"></div>
   <div class="loader-label">
     <span class="loader-line">Regulating</span>
     <span class="loader-sub">Saint-Imier, Bernese Jura</span>
   </div>
-</div>
-
-<!-- Custom cursor -->
-<div id="cursor" aria-hidden="true">
-  <div class="cursor-dot"></div>
-  <div class="cursor-ring"></div>
-</div>
-
-<!-- Progress line -->
-<div id="progress-track" aria-hidden="true">
-  <div id="progress-fill"></div>
-  <div class="progress-mark" style="left:0%"></div>
-  <div class="progress-mark" style="left:25%"></div>
-  <div class="progress-mark" style="left:50%"></div>
-  <div class="progress-mark" style="left:75%"></div>
-  <div class="progress-mark" style="left:100%"></div>
-</div>
-
-<!-- Room indicator -->
-<div id="room-indicator" aria-hidden="true">
-  <span id="room-current">01</span>
-  <span class="room-sep">/</span>
-  <span id="room-total">05</span>
 </div>
 
 <!-- Corner marks -->
@@ -51,142 +27,191 @@
 <div class="mark" id="mark-bl">Independent Swiss Manufacture</div>
 <div class="mark" id="mark-br">100 per year</div>
 
-<!-- Rooms -->
-<div id="rooms">
+<!-- The Movement -->
+<div id="movement">
 
-  <!-- Room 1: Zeitwinkel -->
-  <section class="room" data-index="0">
-    <div class="room-bg"></div>
-    <div class="room-content">
-      <p class="room-meta">Founded 2006</p>
-      <h1 class="room-title">Zeitwinkel</h1>
-      <p class="room-subtitle">The time angle</p>
-      <p class="room-body">Three friends founded Zeitwinkel in Saint-Imier, Bernese Jura. They are still there. Still independent. Still managing the company they started together.</p>
-    </div>
-    <div class="room-accent">
-      <svg viewBox="0 0 200 200" aria-hidden="true">
-        <circle cx="100" cy="100" r="80" fill="none" stroke="#B8B0A8" stroke-width="0.5" opacity="0.15"/>
-        <circle cx="100" cy="100" r="60" fill="none" stroke="#B8B0A8" stroke-width="0.5" opacity="0.1"/>
-        <line x1="100" y1="20" x2="100" y2="180" stroke="#B8B0A8" stroke-width="0.3" opacity="0.1"/>
-        <line x1="20" y1="100" x2="180" y2="100" stroke="#B8B0A8" stroke-width="0.3" opacity="0.1"/>
-      </svg>
-    </div>
-  </section>
+  <!-- Content panels -->
+  <div class="panel" data-part="bridge-main">
+    <p class="panel-meta">Founded 2006</p>
+    <h1 class="panel-title">Zeitwinkel</h1>
+    <p class="panel-body">Three friends founded Zeitwinkel in Saint-Imier, Bernese Jura. They are still there. Still independent. Still managing the company they started together.</p>
+  </div>
 
-  <!-- Room 2: The Workshop -->
-  <section class="room" data-index="1">
-    <div class="room-bg"></div>
-    <div class="room-content">
-      <p class="room-meta">Saint-Imier, Bernese Jura</p>
-      <h2 class="room-title">The Workshop</h2>
-      <p class="room-body">No more than one hundred watches are completed each year. Each one is assembled, regulated and tested by hand. The same watchmaker handles every movement from the first component to the first heartbeat.</p>
-      <div class="room-stats">
-        <div class="stat">
-          <span class="stat-num">100</span>
-          <span class="stat-label">watches per year</span>
-        </div>
-        <div class="stat">
-          <span class="stat-num">1</span>
-          <span class="stat-label">watchmaker per watch</span>
-        </div>
-      </div>
+  <div class="panel" data-part="balance-wheel">
+    <p class="panel-meta">Philosophy</p>
+    <h2 class="panel-title">True Local Time</h2>
+    <p class="panel-body">We believe watchmaking is a craft worth preserving. No shortcuts. No simplifications. Each one a true measure of time.</p>
+    <div class="panel-contact">
+      <p class="contact-line">Zeitwinkel AG</p>
+      <p class="contact-line">Saint-Imier, Bernese Jura</p>
+      <p class="contact-line">Switzerland</p>
     </div>
-    <div class="room-accent">
-      <svg viewBox="0 0 200 40" aria-hidden="true">
-        <line x1="0" y1="20" x2="200" y2="20" stroke="#B8B0A8" stroke-width="0.4" opacity="0.2"/>
-        <line x1="0" y1="10" x2="200" y2="10" stroke="#B8B0A8" stroke-width="0.2" opacity="0.1"/>
-        <line x1="0" y1="30" x2="200" y2="30" stroke="#B8B0A8" stroke-width="0.2" opacity="0.1"/>
-      </svg>
-    </div>
-  </section>
+  </div>
 
-  <!-- Room 3: German Silver -->
-  <section class="room" data-index="2">
-    <div class="room-bg"></div>
-    <div class="room-content">
-      <p class="room-meta">In-house manufacture</p>
-      <h2 class="room-title">German Silver</h2>
-      <p class="room-body">Untreated nickel silver. Harder than brass. Warmer than steel. The plates and bridges of every Zeitwinkel movement require the highest precision in processing and decoration. Our manufacture calibers ZW0102 and ZW0103 are developed, manufactured and assembled in the Swiss Jura.</p>
-      <div class="room-stats">
-        <div class="stat">
-          <span class="stat-num">72h</span>
-          <span class="stat-label">power reserve</span>
-        </div>
-        <div class="stat">
-          <span class="stat-num">28</span>
-          <span class="stat-label">jewels</span>
-        </div>
-        <div class="stat">
-          <span class="stat-num">257</span>
-          <span class="stat-label">components</span>
-        </div>
-      </div>
+  <div class="panel" data-part="gear-train">
+    <p class="panel-meta">Caliber ZW0102 & ZW0103</p>
+    <h2 class="panel-title">The Movement</h2>
+    <p class="panel-body">Seventy-two hours of power reserve. Twenty-eight jewels. Two hundred and fifty-seven components. A robust three-quarter plate. Manufactured in the Swiss Jura.</p>
+    <div class="panel-stats">
+      <div class="stat"><span class="stat-num">72h</span><span class="stat-label">power reserve</span></div>
+      <div class="stat"><span class="stat-num">28</span><span class="stat-label">jewels</span></div>
+      <div class="stat"><span class="stat-num">257</span><span class="stat-label">components</span></div>
     </div>
-    <div class="room-accent">
-      <svg viewBox="0 0 200 200" aria-hidden="true">
-        <rect x="20" y="20" width="160" height="160" fill="none" stroke="#B8B0A8" stroke-width="0.5" opacity="0.12" rx="4"/>
-        <rect x="40" y="40" width="120" height="120" fill="none" stroke="#B8B0A8" stroke-width="0.3" opacity="0.08" rx="2"/>
-        <line x1="100" y1="20" x2="100" y2="180" stroke="#B8B0A8" stroke-width="0.2" opacity="0.06"/>
-        <line x1="20" y1="100" x2="180" y2="100" stroke="#B8B0A8" stroke-width="0.2" opacity="0.06"/>
-      </svg>
-    </div>
-  </section>
+  </div>
 
-  <!-- Room 4: The Collection -->
-  <section class="room" data-index="3">
-    <div class="room-bg"></div>
-    <div class="room-content">
-      <p class="room-meta">The Collection</p>
-      <h2 class="room-title">Six Watches.<br>Two Sizes.</h2>
-      <ul class="watch-list">
-        <li><span class="watch-name">173° Saphir</span><span class="watch-size">39.7 mm</span></li>
-        <li><span class="watch-name">273° Saphir Fumé</span><span class="watch-size">42.5 mm</span></li>
-        <li><span class="watch-name">273° Saphir Bleu</span><span class="watch-size">42.5 mm</span></li>
-        <li><span class="watch-name">240°</span><span class="watch-size">40.5 mm</span></li>
-        <li><span class="watch-name">082° Email Grand Feu</span><span class="watch-size">39 mm</span></li>
-        <li><span class="watch-name">188° MAKS</span><span class="watch-size">39 mm</span></li>
-      </ul>
-      <p class="room-body">Modern interpretations of timeless classic design. Available in two sizes: forty-two and a half millimetres, or thirty-nine.</p>
-    </div>
-    <div class="room-accent">
-      <svg viewBox="0 0 200 200" aria-hidden="true">
-        <circle cx="100" cy="100" r="90" fill="none" stroke="#B8B0A8" stroke-width="0.5" opacity="0.1"/>
-        <circle cx="100" cy="100" r="70" fill="none" stroke="#B8B0A8" stroke-width="0.3" opacity="0.08"/>
-        <circle cx="100" cy="100" r="50" fill="none" stroke="#B8B0A8" stroke-width="0.2" opacity="0.06"/>
-        <line x1="100" y1="10" x2="100" y2="190" stroke="#B8B0A8" stroke-width="0.3" opacity="0.08"/>
-        <line x1="10" y1="100" x2="190" y2="100" stroke="#B8B0A8" stroke-width="0.3" opacity="0.08"/>
-        <line x1="36" y1="36" x2="164" y2="164" stroke="#B8B0A8" stroke-width="0.2" opacity="0.05"/>
-        <line x1="164" y1="36" x2="36" y2="164" stroke="#B8B0A8" stroke-width="0.2" opacity="0.05"/>
-      </svg>
-    </div>
-  </section>
+  <div class="panel" data-part="barrel">
+    <p class="panel-meta">The Collection</p>
+    <h2 class="panel-title">Six Watches</h2>
+    <ul class="watch-list">
+      <li><span class="watch-name">173° Saphir</span><span class="watch-size">39.7 mm</span></li>
+      <li><span class="watch-name">273° Saphir Fumé</span><span class="watch-size">42.5 mm</span></li>
+      <li><span class="watch-name">273° Saphir Bleu</span><span class="watch-size">42.5 mm</span></li>
+      <li><span class="watch-name">240°</span><span class="watch-size">40.5 mm</span></li>
+      <li><span class="watch-name">082° Email Grand Feu</span><span class="watch-size">39 mm</span></li>
+      <li><span class="watch-name">188° MAKS</span><span class="watch-size">39 mm</span></li>
+    </ul>
+    <p class="panel-body">Modern interpretations of timeless classic design. Available in two sizes: 42.5 mm and 39 mm.</p>
+  </div>
 
-  <!-- Room 5: True Local Time -->
-  <section class="room" data-index="4">
-    <div class="room-bg"></div>
-    <div class="room-content">
-      <p class="room-meta">Philosophy</p>
-      <h2 class="room-title">True Local Time</h2>
-      <p class="room-body">We believe watchmaking is a craft worth preserving. No shortcuts. No simplifications. No more than one hundred watches per year. Each one a true measure of time.</p>
-      <div class="room-contact">
-        <p class="contact-line">Zeitwinkel AG</p>
-        <p class="contact-line">Saint-Imier, Bernese Jura</p>
-        <p class="contact-line">Switzerland</p>
-      </div>
+  <div class="panel" data-part="bridge-sec">
+    <p class="panel-meta">Saint-Imier, Bernese Jura</p>
+    <h2 class="panel-title">The Workshop</h2>
+    <p class="panel-body">No more than one hundred watches are completed each year. Each one is assembled, regulated and tested by hand. The same watchmaker handles every movement from the first component to the first heartbeat.</p>
+    <div class="panel-stats">
+      <div class="stat"><span class="stat-num">100</span><span class="stat-label">per year</span></div>
+      <div class="stat"><span class="stat-num">1</span><span class="stat-label">watchmaker</span></div>
     </div>
-    <div class="room-accent">
-      <svg viewBox="0 0 200 200" aria-hidden="true">
-        <circle cx="100" cy="100" r="95" fill="none" stroke="#B8B0A8" stroke-width="0.3" opacity="0.08"/>
-        <circle cx="100" cy="100" r="75" fill="none" stroke="#B8B0A8" stroke-width="0.3" opacity="0.06"/>
-        <circle cx="100" cy="100" r="55" fill="none" stroke="#B8B0A8" stroke-width="0.3" opacity="0.04"/>
-      </svg>
-    </div>
-  </section>
+  </div>
+
+  <!-- SVG Movement -->
+  <svg id="movement-svg" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+    <defs>
+      <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur stdDeviation="1.5" result="blur"/>
+        <feMerge>
+          <feMergeNode in="blur"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+      <filter id="soft-glow" x="-30%" y="-30%" width="160%" height="160%">
+        <feGaussianBlur stdDeviation="0.8" result="blur"/>
+        <feMerge>
+          <feMergeNode in="blur"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+      <linearGradient id="metal-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="rgba(184,176,168,0.08)"/>
+        <stop offset="25%" stop-color="rgba(212,207,200,0.15)"/>
+        <stop offset="50%" stop-color="rgba(184,176,168,0.1)"/>
+        <stop offset="75%" stop-color="rgba(212,207,200,0.06)"/>
+        <stop offset="100%" stop-color="rgba(184,176,168,0.04)"/>
+      </linearGradient>
+      <radialGradient id="center-glow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="rgba(212,207,200,0.1)"/>
+        <stop offset="100%" stop-color="transparent"/>
+      </radialGradient>
+    </defs>
+
+    <!-- Main plate (three-quarter) -->
+    <g id="part-bridge-main" class="movement-part" data-part="bridge-main">
+      <rect x="60" y="80" width="280" height="240" rx="4" fill="url(#metal-grad)" stroke="#B8B0A8" stroke-width="0.8" opacity="0.25"/>
+      <line x1="60" y1="200" x2="340" y2="200" stroke="#B8B0A8" stroke-width="0.4" opacity="0.15"/>
+      <line x1="200" y1="80" x2="200" y2="320" stroke="#B8B0A8" stroke-width="0.3" opacity="0.1"/>
+      <!-- Stripes -->
+      <line x1="80" y1="100" x2="80" y2="180" stroke="#B8B0A8" stroke-width="0.3" opacity="0.06"/>
+      <line x1="100" y1="100" x2="100" y2="180" stroke="#B8B0A8" stroke-width="0.3" opacity="0.06"/>
+      <line x1="120" y1="100" x2="120" y2="180" stroke="#B8B0A8" stroke-width="0.3" opacity="0.06"/>
+      <line x1="140" y1="100" x2="140" y2="180" stroke="#B8B0A8" stroke-width="0.3" opacity="0.06"/>
+      <line x1="160" y1="100" x2="160" y2="180" stroke="#B8B0A8" stroke-width="0.3" opacity="0.06"/>
+      <line x1="180" y1="100" x2="180" y2="180" stroke="#B8B0A8" stroke-width="0.3" opacity="0.06"/>
+    </g>
+
+    <!-- Secondary bridge -->
+    <g id="part-bridge-sec" class="movement-part" data-part="bridge-sec">
+      <rect x="230" y="120" width="80" height="60" rx="3" fill="url(#metal-grad)" stroke="#B8B0A8" stroke-width="0.6" opacity="0.2"/>
+      <circle cx="270" cy="150" r="12" fill="none" stroke="#B8B0A8" stroke-width="0.4" opacity="0.12"/>
+      <line x1="240" y1="135" x2="300" y2="135" stroke="#B8B0A8" stroke-width="0.2" opacity="0.08"/>
+      <line x1="240" y1="165" x2="300" y2="165" stroke="#B8B0A8" stroke-width="0.2" opacity="0.08"/>
+    </g>
+
+    <!-- Balance wheel -->
+    <g id="part-balance-wheel" class="movement-part" data-part="balance-wheel">
+      <!-- Hairspring spiral -->
+      <path d="M 130,120 Q 130,95 155,95 Q 180,95 180,120 Q 180,145 155,145 Q 135,145 135,125" fill="none" stroke="#B8B0A8" stroke-width="0.5" opacity="0.2"/>
+      <!-- Balance rim -->
+      <circle cx="155" cy="120" r="22" fill="none" stroke="#D4CFC8" stroke-width="1.2" opacity="0.35" filter="url(#soft-glow)"/>
+      <!-- Arms -->
+      <line x1="155" y1="98" x2="155" y2="142" stroke="#B8B0A8" stroke-width="0.6" opacity="0.2"/>
+      <line x1="133" y1="120" x2="177" y2="120" stroke="#B8B0A8" stroke-width="0.6" opacity="0.2"/>
+      <!-- Center -->
+      <circle cx="155" cy="120" r="4" fill="#D4CFC8" opacity="0.5" filter="url(#soft-glow)"/>
+    </g>
+
+    <!-- Gear train -->
+    <g id="part-gear-train" class="movement-part" data-part="gear-train">
+      <!-- Large gear -->
+      <circle cx="270" cy="250" r="28" fill="none" stroke="#B8B0A8" stroke-width="0.8" opacity="0.22"/>
+      <circle cx="270" cy="250" r="20" fill="none" stroke="#B8B0A8" stroke-width="0.4" opacity="0.12"/>
+      <circle cx="270" cy="250" r="8" fill="none" stroke="#D4CFC8" stroke-width="0.6" opacity="0.25"/>
+      <!-- Gear teeth (simplified) -->
+      <line x1="270" y1="222" x2="270" y2="218" stroke="#B8B0A8" stroke-width="0.4" opacity="0.15"/>
+      <line x1="270" y1="278" x2="270" y2="282" stroke="#B8B0A8" stroke-width="0.4" opacity="0.15"/>
+      <line x1="242" y1="250" x2="238" y2="250" stroke="#B8B0A8" stroke-width="0.4" opacity="0.15"/>
+      <line x1="298" y1="250" x2="302" y2="250" stroke="#B8B0A8" stroke-width="0.4" opacity="0.15"/>
+      <!-- Small gear -->
+      <circle cx="230" cy="210" r="16" fill="none" stroke="#B8B0A8" stroke-width="0.6" opacity="0.18"/>
+      <circle cx="230" cy="210" r="10" fill="none" stroke="#B8B0A8" stroke-width="0.3" opacity="0.1"/>
+      <circle cx="230" cy="210" r="4" fill="none" stroke="#D4CFC8" stroke-width="0.4" opacity="0.2"/>
+      <!-- Center gear -->
+      <circle cx="270" cy="150" r="14" fill="none" stroke="#B8B0A8" stroke-width="0.5" opacity="0.15"/>
+      <circle cx="270" cy="150" r="8" fill="none" stroke="#D4CFC8" stroke-width="0.3" opacity="0.18"/>
+      <!-- Connection dots -->
+      <circle cx="270" cy="250" r="2" fill="#D4CFC8" opacity="0.3"/>
+      <circle cx="230" cy="210" r="1.5" fill="#D4CFC8" opacity="0.25"/>
+      <circle cx="270" cy="150" r="1.5" fill="#D4CFC8" opacity="0.25"/>
+    </g>
+
+    <!-- Mainspring barrel -->
+    <g id="part-barrel" class="movement-part" data-part="barrel">
+      <circle cx="120" cy="260" r="32" fill="none" stroke="#B8B0A8" stroke-width="1" opacity="0.22"/>
+      <circle cx="120" cy="260" r="24" fill="none" stroke="#B8B0A8" stroke-width="0.5" opacity="0.12"/>
+      <circle cx="120" cy="260" r="16" fill="none" stroke="#D4CFC8" stroke-width="0.6" opacity="0.2"/>
+      <circle cx="120" cy="260" r="6" fill="none" stroke="#D4CFC8" stroke-width="0.4" opacity="0.25"/>
+      <!-- Arbor -->
+      <circle cx="120" cy="260" r="2" fill="#D4CFC8" opacity="0.4"/>
+    </g>
+
+    <!-- Escapement -->
+    <g id="part-escapement" class="movement-part" data-part="escapement">
+      <!-- Escape wheel -->
+      <circle cx="200" cy="200" r="14" fill="none" stroke="#B8B0A8" stroke-width="0.5" opacity="0.15"/>
+      <circle cx="200" cy="200" r="8" fill="none" stroke="#D4CFC8" stroke-width="0.4" opacity="0.18"/>
+      <!-- Pallet fork -->
+      <line x1="185" y1="200" x2="215" y2="200" stroke="#B8B0A8" stroke-width="0.8" opacity="0.2"/>
+      <line x1="200" y1="190" x2="200" y2="210" stroke="#B8B0A8" stroke-width="0.4" opacity="0.12"/>
+      <!-- Center jewel -->
+      <circle cx="200" cy="200" r="2.5" fill="#D4CFC8" opacity="0.35" filter="url(#soft-glow)"/>
+    </g>
+
+    <!-- Jewels -->
+    <g id="jewels" opacity="0.25">
+      <circle cx="155" cy="120" r="2.5" fill="#D4CFC8" filter="url(#soft-glow)"/>
+      <circle cx="270" cy="150" r="2" fill="#D4CFC8" filter="url(#soft-glow)"/>
+      <circle cx="230" cy="210" r="2" fill="#D4CFC8" filter="url(#soft-glow)"/>
+      <circle cx="270" cy="250" r="2.5" fill="#D4CFC8" filter="url(#soft-glow)"/>
+      <circle cx="120" cy="260" r="2.5" fill="#D4CFC8" filter="url(#soft-glow)"/>
+      <circle cx="200" cy="200" r="2" fill="#D4CFC8" filter="url(#soft-glow)"/>
+    </g>
+
+    <!-- Center glow -->
+    <circle cx="200" cy="200" r="80" fill="url(#center-glow)" opacity="0.3" pointer-events="none"/>
+  </svg>
+
+  <!-- Hint -->
+  <div id="hint">Click a component to examine</div>
 
 </div>
-
-<!-- Drag hint -->
-<div id="hint">Drag to navigate</div>
 
 <script src="script.js"></script>
 </body>
