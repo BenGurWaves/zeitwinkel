@@ -1,10 +1,10 @@
-# Zeitwinkel — The Five Positions
+# Zeitwinkel — Das Werk
 
 Independent Swiss watch manufacture. Saint-Imier. 100 watches per year.
 
 ## Concept
 
-Five full-viewport rooms arranged horizontally. The user drags, swipes, or uses arrow keys to move between them. Each room reveals a different facet of the brand: the name, the workshop, German silver, the collection, and the philosophy. A reference to the five positions in which Zeitwinkel regulates each movement.
+The website is Caliber ZW0102. A hand-drawn SVG schematic of the actual movement, top-down. The balance wheel oscillates at 4 Hz (28,800 vph). The escape wheel ticks. The mainspring slowly winds. Ruby jewels glow at every pivot. Click any component — barrel, workshop, escapement, balance, plate — to zoom in and read the brand story tied to that part of the watch.
 
 ## Stack
 
